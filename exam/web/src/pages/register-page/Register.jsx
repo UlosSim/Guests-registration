@@ -10,15 +10,40 @@ import styles from './Register.module.css';
 import { StyledRegister } from './Register.styled';
 import { Link as RouterLink } from 'react-router-dom';
 import { Link } from '@mui/material';
+import { signUp } from '../../api/list/api';
 
 const Register = () => {
   const [open, setOpen] = useState(false);
+  const [isloading, setIsLoading] = useState(false);
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
   const handleOpen = () => {
     setOpen(true);
   };
   const handleClose = () => {
     setOpen(false);
   };
+
+  const handleRegister = async () => {
+    setIsLoading(true);
+
+    try {
+      const userData = {
+        name: name,
+        email: email,
+        password: password,
+      };
+
+      await signUp(userData);
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setIsloading(false);
+    }
+  };
+
   return (
     <div>
       <StyledRegister>
@@ -55,6 +80,8 @@ const Register = () => {
               type='text'
               fullWidth
               variant='standard'
+              value={name}
+              onChange={(e) => setName(e.target.value)}
             />
             <TextField
               margin='dense'
@@ -63,6 +90,8 @@ const Register = () => {
               type='email'
               fullWidth
               variant='standard'
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
             />
             <TextField
               margin='dense'
@@ -71,6 +100,8 @@ const Register = () => {
               type='password'
               fullWidth
               variant='standard'
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
             />
           </DialogContent>
           <DialogActions>
@@ -79,7 +110,7 @@ const Register = () => {
             </Button>
             <Link component={RouterLink} to='/login'>
               {' '}
-              <Button onClick={handleClose} className={styles.submit}>
+              <Button onClick={handleRegister} className={styles.submit}>
                 Register
               </Button>{' '}
             </Link>

@@ -9,15 +9,40 @@ import styles from './Login.module.css';
 import { StyledRegister } from './Login.styled';
 import { Link as RouterLink } from 'react-router-dom';
 import { Link } from '@mui/material';
+import { login } from '../../api/list/api';
+import { useSignIn } from 'react-auth-kit';
 
 const Login = () => {
   const [open, setOpen] = useState(false);
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+
+  const [password, setPassword] = useState('');
+
+  const signIn = useSignIn();
+
   const handleOpen = () => {
     setOpen(true);
   };
   const handleClose = () => {
     setOpen(false);
   };
+  const handleLogin = async () => {
+    try {
+      const response = await login({ name, email, password });
+      console.log(response.data);
+
+      signIn({
+        token: response.data.token,
+        expiresIn: 3600,
+        tokenType: 'Bearer',
+        authState: { email },
+      });
+    } catch (error) {
+      console.log(error.response.data);
+    }
+  };
+
   return (
     <div>
       <StyledRegister>
@@ -45,11 +70,23 @@ const Login = () => {
           <DialogContent>
             <TextField
               margin='dense'
+              id='name'
+              label='Your name'
+              type='email'
+              fullWidth
+              variant='standard'
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+            />
+            <TextField
+              margin='dense'
               id='email'
               label='Your email address'
               type='email'
               fullWidth
               variant='standard'
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
             />
             <TextField
               margin='dense'
@@ -58,6 +95,8 @@ const Login = () => {
               type='password'
               fullWidth
               variant='standard'
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
             />
           </DialogContent>
           <DialogActions>
@@ -66,7 +105,7 @@ const Login = () => {
             </Button>
             <Link component={RouterLink} to='/guests'>
               {' '}
-              <Button onClick={handleClose} className={styles.submit}>
+              <Button onClick={handleLogin} className={styles.submit}>
                 Login
               </Button>{' '}
             </Link>
