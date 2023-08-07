@@ -10,34 +10,28 @@ import { StyledRegister } from './Login.styled';
 import { Link as RouterLink } from 'react-router-dom';
 import { Link } from '@mui/material';
 import { login } from '../../api/list/api';
-import { useSignIn } from 'react-auth-kit';
+// import { useSignIn } from 'react-auth-kit';
 
 const Login = () => {
   const [open, setOpen] = useState(false);
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
-
   const [password, setPassword] = useState('');
-
-  const signIn = useSignIn();
 
   const handleOpen = () => {
     setOpen(true);
   };
+
   const handleClose = () => {
     setOpen(false);
   };
-  const handleLogin = async () => {
+
+  const handleLogin = async (e) => {
     try {
       const response = await login({ name, email, password });
       console.log(response.data);
 
-      signIn({
-        token: response.data.token,
-        expiresIn: 3600,
-        tokenType: 'Bearer',
-        authState: { email },
-      });
+      localStorage.setItem('token', response.data);
     } catch (error) {
       console.log(error.response.data);
     }

@@ -50,6 +50,7 @@ const Register = () => {
         <Button
           variant='contained'
           className={styles.register}
+          disabled={isloading}
           onClick={handleOpen}
           sx={{
             backgroundColor: '#191308',
@@ -110,7 +111,11 @@ const Register = () => {
             </Button>
             <Link component={RouterLink} to='/login'>
               {' '}
-              <Button onClick={handleRegister} className={styles.submit}>
+              <Button
+                disabled={isloading}
+                onClick={handleRegister}
+                className={styles.submit}
+              >
                 Register
               </Button>{' '}
             </Link>
