@@ -26,14 +26,25 @@ const Login = () => {
     setOpen(false);
   };
 
-  const handleLogin = async (e) => {
+  const handleLogin = async () => {
     try {
       const response = await login({ name, email, password });
       console.log(response.data);
 
-      localStorage.setItem('token', response.data);
+      if (response.data.token) {
+        localStorage.setItem('token', response.data.token);
+
+        document.cookie = `token=${response.data.token};`;
+        console.log('Login successful!');
+      } else {
+        console.log('Login failed!');
+      }
     } catch (error) {
-      console.log(error.response.data);
+      if (error.response) {
+        console.log('Login error:', error.response.data);
+      } else {
+        console.log('Login error:', error.message);
+      }
     }
   };
 

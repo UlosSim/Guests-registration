@@ -119,8 +119,8 @@ server.post('/login', async (req, res) => {
 });
 
 server.get('/guests', authenticate, async (req, res) => {
-  const userId = req.user.id;
   try {
+    const userId = req.user.id;
     const [data] = await dbPool.execute(
       `
             SELECT * FROM guests
@@ -128,14 +128,14 @@ server.get('/guests', authenticate, async (req, res) => {
             `,
       [userId]
     );
-    res.status(200).json(data);
+    return res.status(200).send(data);
   } catch (error) {
     console.error(error);
-    res.status(500).end();
+    return res.status(500).end();
   }
 });
 
-server.post('/register-user', authenticate, async (req, res) => {
+server.post('/guests', authenticate, async (req, res) => {
   let payload = req.body;
 
   try {
@@ -170,11 +170,11 @@ server.post('/register-user', authenticate, async (req, res) => {
 });
 
 server.put('/guests/:id', authenticate, async (req, res) => {
-  const payload = req.body;
-  const id = req.params.id;
-  const userId = req.user.id;
-
   try {
+    const payload = req.body;
+    const id = req.params.id;
+    const userId = req.user.id;
+
     const [guestData] = await dbPool.execute(
       `
         SELECT * FROM guests
@@ -213,16 +213,16 @@ server.put('/guests/:id', authenticate, async (req, res) => {
   }
 });
 
-server.delete('/guests/:id', async (req, res) => {
-  const id = req.params.id;
-
+server.delete('/guests/:id', authenticate, async (req, res) => {
   try {
+    const id = req.params.id;
+    const userId = req.user.id;
     const [guestData] = await dbPool.execute(
       `
         SELECT * FROM guests
         WHERE id = ?
       `,
-      [id]
+      [userId, id]
     );
 
     if (!guestData.length) {
