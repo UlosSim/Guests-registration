@@ -11,7 +11,7 @@ import {
 import { useState } from 'react';
 
 const AddGuestDialog = ({ open, onClose, onSave, loading }) => {
-  const [firstname, setFirstName] = useState('');
+  const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [age, setAge] = useState('');
   const [email, setEmail] = useState('');
@@ -28,14 +28,14 @@ const AddGuestDialog = ({ open, onClose, onSave, loading }) => {
         <Stack pt={2} spacing={2}>
           <TextField
             fullWidth
-            label='Name'
-            value={firstname}
+            label='First Name'
+            value={firstName}
             disabled={loading}
             onChange={(e) => setFirstName(e.target.value)}
           />
           <TextField
             fullWidth
-            label='LastName'
+            label='Last Name'
             value={lastName}
             disabled={loading}
             onChange={(e) => setLastName(e.target.value)}
@@ -71,7 +71,7 @@ const AddGuestDialog = ({ open, onClose, onSave, loading }) => {
           disabled={loading}
           onClick={() =>
             onSave({
-              firstname,
+              firstName,
               lastName,
               age,
               email,

@@ -1,27 +1,3 @@
-// const getCookie = (name) => {
-//   const value = `; ${document.cookie}`;
-//   const parts = value.split(`; ${name}=`);
-//   if (parts.length === 2) return parts.pop().split(';').shift();
-// };
-
-// import axios from 'axios';
-
-// const axiosInstance = axios.create({
-//   baseURL: API_BASE,
-// });
-
-// axiosInstance.interceptors.request.use((config) => {
-//   const token = getCookie('userToken');
-//   if (token) {
-//     config.headers.Authorization = `Bearer ${token}`;
-//   }
-//   return config;
-// });
-
-// export const createGuest = (body) => axiosInstance.post('/register-user', body);
-// export const updatedGuest = (id, body) =>
-//   axiosInstance.put(`/guests/${id}`, body);
-// export const deleteGuest = (id) => axiosInstance.delete(`/guests/${id}`);
 import axios from 'axios';
 
 const API_BASE = 'http://localhost:8080';
@@ -35,10 +11,17 @@ export const fetchGuests = (token) =>
     headers: { Authorization: `Bearer ${token}` },
   });
 
-export const createGuest = (token, body) =>
-  axios.post(`${API_BASE}/guests`, body, {
-    headers: { Authorization: `Bearer ${token}` },
-  });
+export const createGuest = async (token, firstName, lastName, age, email) => {
+  const body = { firstName, lastName, age, email };
+  const headers = { Authorization: `Bearer ${token}` };
+
+  try {
+    const response = await axios.post(`${API_BASE}/guests`, body, { headers });
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};
 
 export const deleteGuest = (token, guestId) =>
   axios.delete(`${API_BASE}/guests/${guestId}`, {

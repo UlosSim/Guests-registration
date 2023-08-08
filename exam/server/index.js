@@ -209,20 +209,22 @@ server.put('/guests/:id', authenticate, async (req, res) => {
     res.status(200).json({ message: 'Guest data is updated.' });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ error: 'Failed to update guest data.' });
+    res
+      .status(500)
+      .json({ error: 'Failed to update guest data.', details: error.message });
   }
 });
 
 server.delete('/guests/:id', authenticate, async (req, res) => {
   try {
-    const id = req.params.id;
+    const guestId = req.params.id;
     const userId = req.user.id;
     const [guestData] = await dbPool.execute(
       `
         SELECT * FROM guests
         WHERE id = ?
       `,
-      [userId, id]
+      [guestId]
     );
 
     if (!guestData.length) {
@@ -233,7 +235,7 @@ server.delete('/guests/:id', authenticate, async (req, res) => {
         DELETE FROM guests
         WHERE id = ?
       `,
-      [id]
+      [guestId]
     );
 
     return res.status(200).json({ message: 'Guest deleted successfully.' });
