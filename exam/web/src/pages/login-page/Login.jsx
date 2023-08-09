@@ -10,6 +10,10 @@ import { StyledRegister } from './Login.styled';
 import { Link as RouterLink } from 'react-router-dom';
 import { Link } from '@mui/material';
 import { login } from '../../api/list/api';
+import FingerprintOutlinedIcon from '@mui/icons-material/FingerprintOutlined';
+import EmailOutlinedIcon from '@mui/icons-material/EmailOutlined';
+import InsertEmoticonOutlinedIcon from '@mui/icons-material/InsertEmoticonOutlined';
+
 // import { useSignIn } from 'react-auth-kit';
 
 const Login = () => {
@@ -76,30 +80,53 @@ const Login = () => {
             <TextField
               margin='dense'
               id='name'
-              label='Your name'
+              label={
+                <div style={{ display: 'flex', alignItems: 'center' }}>
+                  <InsertEmoticonOutlinedIcon
+                    color='primary'
+                    style={{ marginLeft: '5px' }}
+                  />{' '}
+                  Your name
+                </div>
+              }
               type='email'
               fullWidth
-              variant='standard'
+              // variant='standard'
               value={name}
               onChange={(e) => setName(e.target.value)}
             />
             <TextField
               margin='dense'
               id='email'
-              label='Your email address'
+              label={
+                <div style={{ display: 'flex', alignItems: 'center' }}>
+                  <EmailOutlinedIcon
+                    color='primary'
+                    style={{ marginLeft: '5px' }}
+                  />{' '}
+                  Your email
+                </div>
+              }
               type='email'
               fullWidth
-              variant='standard'
+              // variant='standard'
               value={email}
               onChange={(e) => setEmail(e.target.value)}
             />
             <TextField
               margin='dense'
               id='password'
-              label='Your password'
+              label={
+                <div style={{ display: 'flex', alignItems: 'center' }}>
+                  <FingerprintOutlinedIcon
+                    color='primary'
+                    style={{ marginLeft: '5px' }}
+                  />{' '}
+                  Your password
+                </div>
+              }
               type='password'
               fullWidth
-              variant='standard'
               value={password}
               onChange={(e) => setPassword(e.target.value)}
             />
