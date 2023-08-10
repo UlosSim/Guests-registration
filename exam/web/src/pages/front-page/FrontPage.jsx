@@ -2,7 +2,7 @@ import { Fab, Link } from '@mui/material';
 import { StyledPage } from './FrontPage.styled';
 
 import { Link as RouterLink } from 'react-router-dom';
-import { green } from '@mui/material/colors';
+
 
 const FrontPage = () => {
   return (
