@@ -55,7 +55,7 @@ const UpdateGuestDialog = ({ open, onClose, onSave, onCancel, guest }) => {
 
   return (
     <Dialog open={open} maxWidth='sm' fullWidth onClose={onClose}>
-      <DialogTitle>Update Guest card</DialogTitle>
+      <DialogTitle sx={{ fontSize: '30px' }}>Update Guest card</DialogTitle>
       <DialogContent>
         <Stack pt={2} spacing={2}>
           <TextField
@@ -90,11 +90,30 @@ const UpdateGuestDialog = ({ open, onClose, onSave, onCancel, guest }) => {
         </Stack>
       </DialogContent>
       <DialogActions>
-        <Button onClick={onCancel}>Cancel</Button>
         <Button
+          sx={{
+            backgroundColor: '#E7AD02',
+            color: '#EEECE7',
+            mr: 2,
+            ':hover': {
+              backgroundColor: '#C70039 ',
+              border: '1px solid #C70039  ',
+            },
+          }}
+          onClick={onCancel}
+        >
+          Cancel
+        </Button>
+        <Button
+          sx={{
+            backgroundColor: '#1F1E1B',
+            color: '#EEECE7',
+            ':hover': {
+              backgroundColor: '#C70039 ',
+              border: '1px solid #C70039  ',
+            },
+          }}
           onClick={handleSubmit}
-          variant='contained'
-          color='primary'
           disabled={!isEditing}
         >
           Update

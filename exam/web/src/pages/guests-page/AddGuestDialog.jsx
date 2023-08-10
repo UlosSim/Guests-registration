@@ -23,7 +23,7 @@ const AddGuestDialog = ({ open, onClose, onSave, loading }) => {
       fullWidth
       onClose={!loading ? onClose : undefined}
     >
-      <DialogTitle>Add new Guest</DialogTitle>
+      <DialogTitle sx={{ fontSize: '30px' }}>Add new Guest</DialogTitle>
       <DialogContent>
         <Stack pt={2} spacing={2}>
           <TextField
@@ -60,14 +60,31 @@ const AddGuestDialog = ({ open, onClose, onSave, loading }) => {
       </DialogContent>
       <DialogActions>
         <Button
-          variant='outlined'
+          sx={{
+            backgroundColor: '#E7AD02',
+            color: '#EEECE7',
+            mr: 2,
+            ':hover': {
+              backgroundColor: '#C70039 ',
+              border: '1px solid #C70039  ',
+            },
+          }}
           disabled={loading}
           onClick={!loading ? onClose : undefined}
         >
           Cancel
         </Button>
         <Button
-          variant='contained'
+          sx={{
+            backgroundColor: '#1F1E1B',
+            pl: 2.5,
+            pr: 2.5,
+            color: '#EEECE7',
+            ':hover': {
+              backgroundColor: '#C70039 ',
+              border: '1px solid #C70039  ',
+            },
+          }}
           disabled={loading}
           onClick={() =>
             onSave({

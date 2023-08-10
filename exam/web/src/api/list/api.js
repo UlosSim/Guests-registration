@@ -12,7 +12,8 @@ export const fetchGuests = (token) =>
   });
 
 export const createGuest = async (token, firstName, lastName, age, email) => {
-  const body = { firstName, lastName, age, email };
+  const body = { firstName, lastName, age: Number(age), email };
+
   const headers = { Authorization: `Bearer ${token}` };
 
   try {

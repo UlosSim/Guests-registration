@@ -14,7 +14,11 @@ import {
   updateGuest,
 } from '../../api/list/api.js';
 import AddGuestDialog from './AddGuestDialog.jsx';
-import { StyledCardContainer, StyledRegister } from './GuestPage.Styled.jsx';
+import {
+  StyledCardContainer,
+  StyledRegister,
+  StyledCard,
+} from './GuestPage.Styled.jsx';
 import UpdateGuestDialog from './UpdateGuestDialog.jsx';
 
 const Guests = () => {
@@ -114,32 +118,6 @@ const Guests = () => {
     }
   };
 
-  // const handleUpdateGuest = async (guestId, updatedValues) => {
-  //   setSelectedGuest(updatedValues);
-  //   setIsLoading(true);
-  //   try {
-  //     const token = localStorage.getItem('token');
-  //     const updatedGuestList = guestList.map((guest) =>
-  //       guest.id === guestId ? { ...guest, ...updatedValues } : guest
-  //     );
-
-  //     await updateGuest(
-  //       token,
-  //       guestId,
-  //       updatedValues.firstName,
-  //       updatedValues.lastName,
-  //       updatedValues.age,
-  //       updatedValues.email
-  //     );
-
-  //     setGuestList(updatedGuestList);
-  //   } catch (error) {
-  //     console.error(error);
-  //   } finally {
-  //     setIsLoading(false);
-  //   }
-  // };
-
   const card = (guestData) => {
     return (
       <>
@@ -151,7 +129,16 @@ const Guests = () => {
         </CardContent>
         <Stack spacing={1} alignItems='center' pb={3}>
           <Button
-            variant='contained'
+            sx={{
+              backgroundColor: '#E7AD02',
+              pl: 2,
+              pr: 2,
+              color: '#EEECE7',
+              ':hover': {
+                backgroundColor: '#C70039 ',
+                border: '1px solid #C70039  ',
+              },
+            }}
             disabled={isLoading}
             onClick={() => handleUpdateDialogOpen(guestData)}
           >
@@ -159,6 +146,16 @@ const Guests = () => {
           </Button>
 
           <Button
+            sx={{
+              backgroundColor: '#C4150A',
+              color: '#EEECE7',
+
+              mr: 2,
+              ':hover': {
+                backgroundColor: '#C70039 ',
+                border: '1px solid #C70039  ',
+              },
+            }}
             variant='outlined'
             disabled={isLoading}
             onClick={() => handleDeleteGuest(guestData.id)}
@@ -180,6 +177,10 @@ const Guests = () => {
             padding: '30px',
             borderRadius: '30px',
             fontSize: 'larger',
+            ':hover': {
+              backgroundColor: '#644C4A ',
+              border: '1px solid #F49A06  ',
+            },
           }}
           variant='contained'
           size='medium'
@@ -193,9 +194,14 @@ const Guests = () => {
 
       <StyledCardContainer>
         {guestList.map((guest) => (
-          <Card key={guest.id} variant='outlined'>
+          <StyledCard
+            sx={{
+              border: '1px solid white',
+            }}
+            key={guest.id}
+          >
             {card(guest)}
-          </Card>
+          </StyledCard>
         ))}
       </StyledCardContainer>
 

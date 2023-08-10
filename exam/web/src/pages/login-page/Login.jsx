@@ -5,22 +5,22 @@ import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
-import styles from './Login.module.css';
-import { StyledRegister } from './Login.styled';
+
+import { StyledRegister, StyledButton } from './Login.styled';
 import { Link as RouterLink } from 'react-router-dom';
 import { Link } from '@mui/material';
 import { login } from '../../api/list/api';
 import FingerprintOutlinedIcon from '@mui/icons-material/FingerprintOutlined';
 import EmailOutlinedIcon from '@mui/icons-material/EmailOutlined';
 import InsertEmoticonOutlinedIcon from '@mui/icons-material/InsertEmoticonOutlined';
-
-// import { useSignIn } from 'react-auth-kit';
+import { useNavigate } from 'react-router-dom';
 
 const Login = () => {
   const [open, setOpen] = useState(false);
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const navigate = useNavigate();
 
   const handleOpen = () => {
     setOpen(true);
@@ -40,14 +40,17 @@ const Login = () => {
 
         document.cookie = `token=${response.data.token};`;
         console.log('Login successful!');
+        navigate('/guests');
       } else {
         console.log('Login failed!');
+        navigate('/');
       }
     } catch (error) {
       if (error.response) {
         console.log('Login error:', error.response.data);
       } else {
         console.log('Login error:', error.message);
+        navigate('/');
       }
     }
   };
@@ -55,27 +58,19 @@ const Login = () => {
   return (
     <div>
       <StyledRegister>
-        <Button
+        <StyledButton
           variant='contained'
-          className={styles.login}
           onClick={handleOpen}
           sx={{
-            backgroundColor: '#191308',
-            color: 'A29F99',
             padding: '30px',
             borderRadius: '30px',
-            fontSize: 'larger',
+            border: '1px solid white',
           }}
         >
           Login to your account
-        </Button>
-        <Dialog
-          sx={{ ml: 4 }}
-          className={styles.content}
-          open={open}
-          onClose={handleClose}
-        >
-          <DialogTitle className={styles.title}>Login</DialogTitle>
+        </StyledButton>
+        <Dialog sx={{ ml: 4 }} open={open} onClose={handleClose}>
+          <DialogTitle c>Login</DialogTitle>
           <DialogContent>
             <TextField
               margin='dense'
@@ -83,15 +78,14 @@ const Login = () => {
               label={
                 <div style={{ display: 'flex', alignItems: 'center' }}>
                   <InsertEmoticonOutlinedIcon
-                    color='primary'
+                    color='secondary'
                     style={{ marginLeft: '5px' }}
-                  />{' '}
-                  Your name
+                  />
+                  &nbsp; Your name
                 </div>
               }
               type='email'
               fullWidth
-              // variant='standard'
               value={name}
               onChange={(e) => setName(e.target.value)}
             />
@@ -101,15 +95,14 @@ const Login = () => {
               label={
                 <div style={{ display: 'flex', alignItems: 'center' }}>
                   <EmailOutlinedIcon
-                    color='primary'
+                    color='secondary'
                     style={{ marginLeft: '5px' }}
                   />{' '}
-                  Your email
+                  &nbsp; Your email
                 </div>
               }
               type='email'
               fullWidth
-              // variant='standard'
               value={email}
               onChange={(e) => setEmail(e.target.value)}
             />
@@ -119,10 +112,10 @@ const Login = () => {
               label={
                 <div style={{ display: 'flex', alignItems: 'center' }}>
                   <FingerprintOutlinedIcon
-                    color='primary'
+                    color='secondary'
                     style={{ marginLeft: '5px' }}
                   />{' '}
-                  Your password
+                  &nbsp; Your password
                 </div>
               }
               type='password'
@@ -132,12 +125,33 @@ const Login = () => {
             />
           </DialogContent>
           <DialogActions>
-            <Button onClick={handleClose} className={styles.submit}>
+            <Button
+              onClick={handleClose}
+              sx={{
+                backgroundColor: '#E7AD02',
+                color: '#EEECE7',
+                mr: 2,
+                ':hover': {
+                  backgroundColor: '#C70039 ',
+                  border: '1px solid #C70039  ',
+                },
+              }}
+            >
               Cancel
             </Button>
-            <Link component={RouterLink} to='/guests'>
+            <Link component={RouterLink}>
               {' '}
-              <Button onClick={handleLogin} className={styles.submit}>
+              <Button
+                onClick={handleLogin}
+                sx={{
+                  backgroundColor: '#1F1E1B',
+                  color: '#EEECE7',
+                  ':hover': {
+                    backgroundColor: '#C70039 ',
+                    border: '1px solid #C70039  ',
+                  },
+                }}
+              >
                 Login
               </Button>{' '}
             </Link>

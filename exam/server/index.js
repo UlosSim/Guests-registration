@@ -168,7 +168,6 @@ server.post('/guests', authenticate, async (req, res) => {
     return res.status(500).json({ error: 'Failed to add guest' });
   }
 });
-
 server.put('/guests/:id', authenticate, async (req, res) => {
   try {
     const payload = req.body;
